@@ -54,10 +54,11 @@ const DADOS_EQUIPE = {
 const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 export default function DashboardResponsivo() {
-  const [advogadoSelecionado, setAdvogadoSelecionado] = useState("Dra. Johanna");
-  const dadosAtuais = DADOS_EQUIPE[advogadoSelecionado];
+  // Inicializamos com a primeira chave do objeto (Dra. Iohanna agora é a primeira)
+  const [advogadoSelecionado, setAdvogadoSelecionado] = useState(Object.keys(DADOS_EQUIPE)[0]);
+  
+  const dadosAtuais = DADOS_EQUIPE[advogadoSelecionado] || [];
 
-  // Cálculo de produtividade total
   const totalAnual = dadosAtuais.reduce((acc, curr) => {
     const somaSetor = MESES.reduce((soma, mes) => soma + (curr[mes] || 0), 0);
     return acc + somaSetor;
@@ -65,7 +66,6 @@ export default function DashboardResponsivo() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-6 md:p-8 font-sans text-slate-900">
-      {/* Header Responsivo */}
       <header className="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b pb-8 border-slate-200">
         <div className="text-center lg:text-left">
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 flex items-center justify-center lg:justify-start gap-3">
@@ -91,7 +91,6 @@ export default function DashboardResponsivo() {
         </div>
       </header>
 
-      {/* Cards de Resumo */}
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 justify-center lg:justify-start">
         <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 w-full sm:w-fit min-w-[180px] lg:max-w-xs transition-all hover:shadow-md">
           <p className="text-[10px] text-slate-400 font-bold uppercase mb-1 flex items-center gap-2">
@@ -111,7 +110,6 @@ export default function DashboardResponsivo() {
         </div>
       </div>
 
-      {/* Container do Gráfico */}
       <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
         <h2 className="text-lg sm:text-xl font-bold mb-8 text-slate-800 flex items-center gap-2">
           <TrendingUp className="text-blue-600" size={20} /> Distribuição de Atividades
@@ -132,11 +130,13 @@ export default function DashboardResponsivo() {
                 />
                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} />
                 
-                {/* ALTERAÇÃO: itemSorter adicionado para ordenar os meses Jan -> Dez no hover */}
                 <Tooltip 
                   cursor={{fill: '#f8fafc'}}
                   contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
-                  itemSorter={(item) => MESES.indexOf(item.dataKey)}
+                  itemSorter={(item) => {
+                    const index = MESES.indexOf(item.dataKey);
+                    return index === -1 ? 99 : index;
+                  }}
                 />
 
                 <Legend verticalAlign="top" height={50} iconType="circle" wrapperStyle={{fontSize: '12px', paddingBottom: '20px'}} />
@@ -152,26 +152,13 @@ export default function DashboardResponsivo() {
             </ResponsiveContainer>
           </div>
         </div>
-        <p className="text-[10px] text-center text-slate-400 mt-4 lg:hidden italic">
-          Arraste lateralmente para ver todos os meses e categorias
-        </p>
       </div>
 
       <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f5f9;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
       `}</style>
     </div>
   );
