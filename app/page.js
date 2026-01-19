@@ -42,7 +42,7 @@ const DADOS_EQUIPE = {
     { setor: 'Marketing', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Negociação', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 1, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 1 },
     { setor: 'Consultoria', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
-    { setor: 'Administrativo', Jan: 0, Fev: 0, Mar: 0, Abr: 1, Mai: 1, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
+    { setor: 'Administrativo', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 1, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Judicial', Jan: 2, Fev: 4, Mar: 1, Abr: 3, Mai: 5, Jun: 10, Jul: 4, Ago: 11, Set: 7, Out: 2, Nov: 6, Dez: 8 },
     { setor: 'Recursal', Jan: 3, Fev: 0, Mar: 0, Abr: 0, Mai: 3, Jun: 0, Jul: 0, Ago: 4, Set: 0, Out: 1, Nov: 1, Dez: 0 },
     { setor: 'Execução', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
