@@ -5,7 +5,7 @@ import { LayoutDashboard, TrendingUp, UserCheck, Briefcase } from 'lucide-react'
 
 // DADOS CONSOLIDADOS 2025 - EQUIPE COMPLETA
 const DADOS_EQUIPE = {
-  "Dra. Johanna": [
+  "Dra. Iohanna": [
     { setor: 'Marketing', Jan: 2, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Judicial', Jan: 6, Fev: 2, Mar: 3, Abr: 9, Mai: 6, Jun: 9, Jul: 6, Ago: 16, Set: 8, Out: 9, Nov: 8, Dez: 2 },
     { setor: 'Administrativo', Jan: 1, Fev: 0, Mar: 0, Abr: 2, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
