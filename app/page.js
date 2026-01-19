@@ -42,7 +42,7 @@ const DADOS_EQUIPE = {
     { setor: 'Marketing', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Negociação', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 1, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 1 },
     { setor: 'Consultoria', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
-    { setor: 'Administrativo', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 1, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
+    { setor: 'Administrativo', Jan: 0, Fev: 0, Mar: 0, Abr: 1, Mai: 1, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Judicial', Jan: 2, Fev: 4, Mar: 1, Abr: 3, Mai: 5, Jun: 10, Jul: 4, Ago: 11, Set: 7, Out: 2, Nov: 6, Dez: 8 },
     { setor: 'Recursal', Jan: 3, Fev: 0, Mar: 0, Abr: 0, Mai: 3, Jun: 0, Jul: 0, Ago: 4, Set: 0, Out: 1, Nov: 1, Dez: 0 },
     { setor: 'Execução', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
@@ -91,7 +91,7 @@ export default function DashboardResponsivo() {
         </div>
       </header>
 
-      {/* Cards de Resumo - Compactos e Adaptáveis ao Conteúdo no Desktop */}
+      {/* Cards de Resumo */}
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 justify-center lg:justify-start">
         <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 w-full sm:w-fit min-w-[180px] lg:max-w-xs transition-all hover:shadow-md">
           <p className="text-[10px] text-slate-400 font-bold uppercase mb-1 flex items-center gap-2">
@@ -117,7 +117,6 @@ export default function DashboardResponsivo() {
           <TrendingUp className="text-blue-600" size={20} /> Distribuição de Atividades
         </h2>
         
-        {/* Scroll lateral em telas pequenas para não esmagar as barras */}
         <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
           <div className="h-[450px] min-w-[700px] lg:min-w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -132,10 +131,14 @@ export default function DashboardResponsivo() {
                   height={80}
                 />
                 <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} />
+                
+                {/* ALTERAÇÃO: itemSorter adicionado para ordenar os meses Jan -> Dez no hover */}
                 <Tooltip 
                   cursor={{fill: '#f8fafc'}}
                   contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
+                  itemSorter={(item) => MESES.indexOf(item.dataKey)}
                 />
+
                 <Legend verticalAlign="top" height={50} iconType="circle" wrapperStyle={{fontSize: '12px', paddingBottom: '20px'}} />
                 {MESES.map((mes, index) => (
                   <Bar 
