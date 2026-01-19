@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { LayoutDashboard, Calendar, Briefcase, TrendingUp, UserCheck } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, UserCheck, Briefcase } from 'lucide-react';
 
-// DADOS 2025: 4 ADVOGADOS X 10 CATEGORIAS X 12 MESES
+// DADOS CONSOLIDADOS 2025 - EQUIPE COMPLETA
 const DADOS_EQUIPE = {
   "Dra. Johanna": [
     { setor: 'Marketing', Jan: 2, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
@@ -49,40 +49,40 @@ const DADOS_EQUIPE = {
     { setor: 'Financeiro', Jan: 1, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 0, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 },
     { setor: 'Arquivamento', Jan: 0, Fev: 0, Mar: 0, Abr: 0, Mai: 0, Jun: 0, Jul: 1, Ago: 0, Set: 0, Out: 0, Nov: 0, Dez: 0 }
   ],
-  
 };
 
 const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
-export default function DashboardJuridico() {
+export default function DashboardResponsivo() {
   const [advogadoSelecionado, setAdvogadoSelecionado] = useState("Dra. Johanna");
-
   const dadosAtuais = DADOS_EQUIPE[advogadoSelecionado];
 
-  // Cálculo do total anual dinâmico
+  // Cálculo de produtividade total
   const totalAnual = dadosAtuais.reduce((acc, curr) => {
     const somaSetor = MESES.reduce((soma, mes) => soma + (curr[mes] || 0), 0);
     return acc + somaSetor;
   }, 0);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
-      <header className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b pb-8 border-slate-200">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3">
-            <LayoutDashboard className="text-blue-600" /> Gestão de Produção 2025
+    <div className="min-h-screen bg-slate-50 p-4 sm:p-6 md:p-8 font-sans text-slate-900">
+      {/* Header Responsivo */}
+      <header className="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b pb-8 border-slate-200">
+        <div className="text-center lg:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 flex items-center justify-center lg:justify-start gap-3">
+            <LayoutDashboard className="text-blue-600 shrink-0" /> 
+            <span className="truncate">Gestão de Produção 2025</span>
           </h1>
-          <p className="text-slate-500 font-medium">Relatórios detalhados por setor e negociação</p>
+          <p className="text-slate-500 font-medium text-sm sm:text-base">Relatórios detalhados por setor e negociação</p>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-xs font-bold text-slate-400 uppercase flex items-center gap-2 tracking-widest">
-            <UserCheck size={14} /> Selecionar Advogado
+        <div className="flex flex-col gap-2 w-full lg:w-72">
+          <label className="text-[10px] font-bold text-slate-400 uppercase flex items-center gap-2 tracking-widest justify-center lg:justify-start">
+            <UserCheck size={12} /> Selecionar Advogado
           </label>
           <select 
             value={advogadoSelecionado}
             onChange={(e) => setAdvogadoSelecionado(e.target.value)}
-            className="bg-white border border-slate-200 px-4 py-3 rounded-xl shadow-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+            className="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl shadow-sm font-bold text-slate-700 focus:ring-2 focus:ring-blue-500 outline-none appearance-none cursor-pointer text-center lg:text-left transition-all"
           >
             {Object.keys(DADOS_EQUIPE).map(nome => (
               <option key={nome} value={nome}>{nome}</option>
@@ -91,56 +91,85 @@ export default function DashboardJuridico() {
         </div>
       </header>
 
-      {/* Cards de Resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <p className="text-xs text-slate-400 font-bold uppercase mb-2">Responsável</p>
-          <p className="text-2xl font-bold text-slate-800">{advogadoSelecionado}</p>
+      {/* Cards de Resumo - Compactos e Adaptáveis ao Conteúdo no Desktop */}
+      <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 justify-center lg:justify-start">
+        <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 w-full sm:w-fit min-w-[180px] lg:max-w-xs transition-all hover:shadow-md">
+          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1 flex items-center gap-2">
+            <Briefcase size={12} /> Responsável
+          </p>
+          <p className="text-lg font-bold text-slate-800 whitespace-nowrap px-1">{advogadoSelecionado}</p>
         </div>
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <p className="text-xs text-slate-400 font-bold uppercase mb-2">Produtividade Média</p>
-          <p className="text-2xl font-bold text-blue-600">{(totalAnual / 12).toFixed(1)} / mês</p>
+        
+        <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 w-full sm:w-fit min-w-[180px] lg:max-w-xs transition-all hover:shadow-md">
+          <p className="text-[10px] text-slate-400 font-bold uppercase mb-1 tracking-wider">Produtividade Média</p>
+          <p className="text-lg font-bold text-blue-600 whitespace-nowrap px-1">{(totalAnual / 12).toFixed(1)} / mês</p>
         </div>
-        <div className="bg-blue-600 p-6 rounded-2xl shadow-lg flex flex-col justify-center">
-          <p className="text-xs text-blue-100 font-bold uppercase mb-1">Total Consolidado 2025</p>
-          <p className="text-3xl font-black text-white">{totalAnual} processos</p>
+        
+        <div className="bg-blue-600 p-5 rounded-2xl shadow-lg flex flex-col justify-center w-full sm:w-fit min-w-[180px] lg:max-w-xs transition-all hover:scale-[1.02]">
+          <p className="text-[10px] text-blue-100 font-bold uppercase mb-1 tracking-wider">Total Consolidado 2025</p>
+          <p className="text-xl font-black text-white whitespace-nowrap px-1">{totalAnual} processos</p>
         </div>
       </div>
 
-      {/* Gráfico Detalhado */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100">
-        <h2 className="text-xl font-bold mb-8 text-slate-800 flex items-center gap-2">
-          <TrendingUp className="text-blue-600" size={20} /> Distribuição de Atividades (Incluindo Negociação)
+      {/* Container do Gráfico */}
+      <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+        <h2 className="text-lg sm:text-xl font-bold mb-8 text-slate-800 flex items-center gap-2">
+          <TrendingUp className="text-blue-600" size={20} /> Distribuição de Atividades
         </h2>
-        <div className="h-[600px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dadosAtuais} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis 
-                dataKey="setor" 
-                angle={-45} 
-                textAnchor="end" 
-                interval={0} 
-                tick={{fill: '#64748b', fontSize: 12, fontWeight: 700}} 
-              />
-              <YAxis axisLine={false} tickLine={false} />
-              <Tooltip 
-                cursor={{fill: '#f8fafc'}}
-                contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
-              />
-              <Legend verticalAlign="top" height={50} iconType="circle"/>
-              {MESES.map((mes, index) => (
-                <Bar 
-                  key={mes} 
-                  dataKey={mes} 
-                  fill={index % 2 === 0 ? "#2563eb" : "#93c5fd"} 
-                  radius={[2, 2, 0, 0]} 
+        
+        {/* Scroll lateral em telas pequenas para não esmagar as barras */}
+        <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
+          <div className="h-[450px] min-w-[700px] lg:min-w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={dadosAtuais} margin={{ top: 20, right: 10, left: -20, bottom: 60 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis 
+                  dataKey="setor" 
+                  angle={-45} 
+                  textAnchor="end" 
+                  interval={0} 
+                  tick={{fill: '#64748b', fontSize: 11, fontWeight: 700}} 
+                  height={80}
                 />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
+                <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} />
+                <Tooltip 
+                  cursor={{fill: '#f8fafc'}}
+                  contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'}}
+                />
+                <Legend verticalAlign="top" height={50} iconType="circle" wrapperStyle={{fontSize: '12px', paddingBottom: '20px'}} />
+                {MESES.map((mes, index) => (
+                  <Bar 
+                    key={mes} 
+                    dataKey={mes} 
+                    fill={index % 2 === 0 ? "#2563eb" : "#93c5fd"} 
+                    radius={[2, 2, 0, 0]} 
+                  />
+                ))}
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
+        <p className="text-[10px] text-center text-slate-400 mt-4 lg:hidden italic">
+          Arraste lateralmente para ver todos os meses e categorias
+        </p>
       </div>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f5f9;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
+        }
+      `}</style>
     </div>
   );
 }
